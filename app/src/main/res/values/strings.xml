@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Compose TV</string>
+    <string name="app_name_debug">Compose TV (Debug)</string>
+    <string name="episode">Episode %d</string>
+    <string name="season">Season %d</string>
+</resources>

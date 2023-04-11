@@ -1,0 +1,71 @@
+[versions]
+
+# Compose TV Example
+versionCode = "1"
+versionName = "1.0"
+
+# Android SDK
+android-compileSdk = "33"
+android-gradlePlugin = "7.3.1"
+android-minSdk = "21"
+android-targetSdk = "31"
+
+# AndroidX / Jetpack
+androidx-activity = "1.7.0"
+androidx-core = "1.10.0"
+
+# Other dependencies
+compose = "1.4.1"
+composeCompiler = "1.4.3"
+coroutines = "1.6.4"
+kotlin = "1.8.10"
+kotlinx-datetime = "0.4.0"
+
+##################################################################################################################################
+
+[libraries]
+
+# Gradle Plugins
+gradle-android = { module = "com.android.tools.build:gradle", version.ref = "android-gradlePlugin" }
+gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+# AndroidX / Jetpack
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+
+# Compose
+compose-activity = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+
+# Coroutines
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+
+# Kotlin
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+##################################################################################################################################
+
+[bundles]
+
+androidx = [
+    "androidx-activity",
+    "androidx-core"
+]
+
+compose = [
+    "compose-activity",
+    "compose-foundation",
+    "compose-material",
+    "compose-ui",
+    "compose-ui-tooling-preview"
+]
+
+coroutines = [
+    "coroutines-android",
+    "coroutines-core"
+]
