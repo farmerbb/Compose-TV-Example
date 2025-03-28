@@ -4,4 +4,6 @@
     <string name="app_name_debug">Compose TV (Debug)</string>
     <string name="episode">Episode %d</string>
     <string name="season">Season %d</string>
+    <string name="click_me">Click me!</string>
+    <string name="clicks">Clicks: %d</string>
 </resources>

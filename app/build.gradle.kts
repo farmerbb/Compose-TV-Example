@@ -3,6 +3,7 @@ import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("org.jetbrains.kotlin.plugin.compose") version libs.versions.kotlin.get()
 }
 
 repositories {
@@ -30,18 +31,14 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + listOf(
             "-opt-in=kotlin.RequiresOptIn"
         )
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
     signingConfigs {
@@ -89,5 +86,6 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.coroutines)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.konfetti)
     debugImplementation(libs.compose.ui.tooling)
 }

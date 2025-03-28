@@ -5,21 +5,21 @@ versionCode = "1"
 versionName = "1.0"
 
 # Android SDK
-android-compileSdk = "33"
-android-gradlePlugin = "7.3.1"
-android-minSdk = "21"
-android-targetSdk = "31"
+android-compileSdk = "35"
+android-gradlePlugin = "8.7.3"
+android-minSdk = "23"
+android-targetSdk = "35"
 
 # AndroidX / Jetpack
-androidx-activity = "1.7.0"
-androidx-core = "1.10.0"
+androidx-activity = "1.10.1"
+androidx-core = "1.15.0"
 
 # Other dependencies
-compose = "1.4.1"
-composeCompiler = "1.4.3"
-coroutines = "1.6.4"
-kotlin = "1.8.10"
-kotlinx-datetime = "0.4.0"
+compose = "1.7.8"
+coroutines = "1.9.0"
+konfetti = "2.0.3"
+kotlin = "2.1.20"
+kotlinx-datetime = "0.6.1"
 
 ##################################################################################################################################
 
@@ -47,6 +47,9 @@ coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", ve
 
 # Kotlin
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+# Other dependencies
+konfetti = { module = "nl.dionsegijn:konfetti-compose", version.ref = "konfetti" }
 
 ##################################################################################################################################
 

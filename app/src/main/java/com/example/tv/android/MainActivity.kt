@@ -21,19 +21,22 @@ import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
-import com.example.tv.ui.ComposeTVApp
+import com.example.tv.ui.screen.EmojiConfettiScreen
+import com.example.tv.ui.screen.ScrollableRailsScreen
 import com.example.tv.util.EventThrottler
 import kotlin.time.Duration.Companion.milliseconds
 
 class MainActivity : ComponentActivity() {
     private val horizontalThrottler = EventThrottler(75.milliseconds)
     private val verticalThrottler = EventThrottler(200.milliseconds)
+    private val selectThrottler = EventThrottler(500.milliseconds)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                ComposeTVApp()
+                ScrollableRailsScreen()
+//                EmojiConfettiScreen()
             }
         }
     }
@@ -56,6 +59,10 @@ class MainActivity : ComponentActivity() {
             KeyEvent.KEYCODE_DPAD_UP,
             KeyEvent.KEYCODE_DPAD_DOWN -> {
                 verticalThrottler.throttleEvent()
+            }
+
+            KeyEvent.KEYCODE_DPAD_CENTER -> {
+                selectThrottler.throttleEvent()
             }
 
             else -> false

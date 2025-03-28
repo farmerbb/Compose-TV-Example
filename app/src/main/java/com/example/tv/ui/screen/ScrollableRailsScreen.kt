@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.example.tv.ui
+package com.example.tv.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -38,9 +38,12 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.tv.R
+import com.example.tv.ui.component.TVLazyColumn
+import com.example.tv.ui.component.TVLazyRow
+import com.example.tv.ui.component.Tile
 
 @Composable
-fun ComposeTVApp() {
+fun ScrollableRailsScreen() {
 
     // Maintain a map of the last focused row, as well as the last focused item in each row.
     // This allows us to reign in a bit of control over Compose's focus system when navigating
@@ -83,8 +86,8 @@ fun ComposeTVApp() {
 
                     TVLazyRow { onItemGloballyPositioned, scrollToItem ->
                         items(20) { itemIndex ->
-                            EpisodeItem(
-                                index = itemIndex,
+                            Tile(
+                                text = stringResource(id = R.string.episode, itemIndex + 1),
 
                                 // Allow all items in the currently focused row to be focusable,
                                 // otherwise, only allow the last focused item to be focusable.

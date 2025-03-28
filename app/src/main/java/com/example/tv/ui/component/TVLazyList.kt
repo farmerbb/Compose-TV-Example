@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.example.tv.ui
+package com.example.tv.ui.component
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope

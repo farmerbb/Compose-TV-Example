@@ -13,12 +13,15 @@
  * limitations under the License.
  */
 
-package com.example.tv.ui
+package com.example.tv.ui.component
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -39,19 +42,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.tv.R
 
 @Composable
-fun EpisodeItem(
-    index: Int,
-    isFocusable: Boolean,
-    focusRequester: FocusRequester?,
-    onItemGloballyPositioned: (LayoutCoordinates) -> Unit,
-    onFocused: () -> Unit
+fun Tile(
+    text: String,
+    focusedColor: Color = Color.LightGray,
+    unfocusedColor: Color = Color.Gray,
+    isFocusable: Boolean = false,
+    isClickable: Boolean = false,
+    focusRequester: FocusRequester? = null,
+    onItemGloballyPositioned: (LayoutCoordinates) -> Unit = {},
+    onFocused: () -> Unit = {},
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier,
 ) {
     // We declare an interaction source so that we can receive focus events
     val interactionSource = remember { MutableInteractionSource() }
@@ -64,12 +71,14 @@ fun EpisodeItem(
 
     // Transition animations for when an item is focused
     val transition = updateTransition(isFocused, "EpisodeItem transition")
+    val floatSpec = tween<Float>(durationMillis = 200, easing = FastOutSlowInEasing)
+    val colorSpec = tween<Color>(durationMillis = 200, easing = FastOutSlowInEasing)
 
     @Composable
     fun animate(targetValue: @Composable (state: Boolean) -> Float) =
         transition.animateFloat(
             label = "EpisodeItem animateFloat",
-            transitionSpec = { tween(durationMillis = 200, easing = FastOutSlowInEasing) },
+            transitionSpec = { floatSpec },
             targetValueByState = targetValue
         )
 
@@ -82,9 +91,14 @@ fun EpisodeItem(
 
     // These values are manipulated based on whether or not the item is currently focused.
     val elevation by animate { if (it) 12f else 4f }
-    val rgbValue by animate { if (it) Color.LightGray.red else Color.Gray.red }
     val externalPadding by animate { if (it) 0f else basePadding }
     val internalPadding by animate { if (it) basePadding else 0f }
+
+    val bgColor = if (isFocused) focusedColor else unfocusedColor
+    val animatedBgColor by animateColorAsState(bgColor, animationSpec = colorSpec)
+
+    val textColor = if (animatedBgColor.luminance() >= 0.2f) Color.Black else Color.White
+    val animatedTextColor by animateColorAsState(textColor, animationSpec = colorSpec)
 
     // Declare a parent box with the maximum possible width + height of an item.
     // We also set onGloballyPositioned here which is passed down from the parent TVLazyList.
@@ -93,13 +107,11 @@ fun EpisodeItem(
             .width((baseWidth + basePadding).dp)
             .height((baseHeight + basePadding).dp)
             .onGloballyPositioned(onItemGloballyPositioned)
+            .then(modifier)
     ) {
         Surface(
             shape = RoundedCornerShape(8.dp),
-
-            // Reconstruct the background color based on the animated value above
-            color = Color(red = rgbValue, green = rgbValue, blue = rgbValue),
-
+            color = animatedBgColor,
             elevation = elevation.dp,
             modifier = Modifier
                 // "External" padding is applied when an item is not focused
@@ -116,6 +128,10 @@ fun EpisodeItem(
                 .thenIf(isFocusable) {
                     Modifier.focusable(interactionSource = interactionSource)
                 }
+
+                .thenIf(isClickable) {
+                    Modifier.clickable(onClick = onClick)
+                }
         ) {
             Box(
                 modifier = Modifier
@@ -124,9 +140,9 @@ fun EpisodeItem(
                     .height((baseHeight + internalPadding).dp)
             ) {
                 Text(
-                    color = Color.Black,
+                    color = animatedTextColor,
                     style = MaterialTheme.typography.body2,
-                    text = stringResource(id = R.string.episode, index + 1),
+                    text = text,
                     modifier = Modifier
                         .align(Alignment.Center)
                 )

@@ -9,3 +9,4 @@
 /app/build
 output.json
 output-metadata.json
+.kotlin
